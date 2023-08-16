@@ -1,10 +1,5 @@
 export default [
     {
-        name: "room",
-        type: "glbModel",
-        path: "/portfolio/models/room.glb",
-    },
-    {
         name: "screen",
         type: "videoTexture",
         path: "/portfolio/textures/bird.mp4",
