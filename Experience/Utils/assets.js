@@ -1,10 +1,5 @@
 export default [
     {
-        name: "screen",
-        type: "videoTexture",
-        path: "/portfolio/textures/bird.mp4",
-    },
-    {
         name: "screen_vr",
         type: "videoTexture",
         path: "/portfolio/textures/chessAI-sample.mp4",
