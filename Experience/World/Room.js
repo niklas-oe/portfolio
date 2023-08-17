@@ -33,7 +33,6 @@ export default class Room {
             child.receiveShadow = true;
             if (child instanceof THREE.Group) {
                 child.children.forEach((groupChild) => {
-                    console.log(child.children[0].name);
                     groupChild.castShadow = true;
                     groupChild.receiveShadow = true;
                 })

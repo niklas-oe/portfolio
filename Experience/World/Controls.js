@@ -22,7 +22,6 @@ export default class Controls {
     }
 
     setPath() {
-        console.log(this.room);
         this.timeline = new GSAP.timeline();
         this.timeline.to(this.room.position, {
             x: () => {
@@ -42,7 +41,6 @@ export default class Controls {
         ScrollTrigger.matchMedia({
 	        // Desktop
             "(min-width: 969px)": () => {
-                console.log("viewing on desktop.");
                 this.room.scale.set(0.34, 0.34, 0.34);
 
                 // First Section
@@ -112,7 +110,6 @@ export default class Controls {
 
             // Mobile
             "(max-width: 968px)": () => {
-                console.log("viewing on mobile.");
 
                 //Resets
                 this.room.scale.set(0.18, 0.18, 0.18);
@@ -170,7 +167,7 @@ export default class Controls {
                             }
                         });
                         GSAP.to(section, {
-                            borderBottomLeftRadius: 700,
+                            borderBottomLeftRadius: 600,
                             scrollTrigger: {
                                 trigger: section,
                                 start: "bottom bottom",
@@ -189,7 +186,7 @@ export default class Controls {
                             }
                         });
                         GSAP.to(section, {
-                            borderBottomRightRadius: 700,
+                            borderBottomRightRadius: 600,
                             scrollTrigger: {
                                 trigger: section,
                                 start: "bottom bottom",
