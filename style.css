@@ -247,6 +247,9 @@ html, body {
   .section {
     width: 100%;
   }
+  .section-margin {
+    height: 1500px;
+  }
 }
 
 /* Image Scroll */
