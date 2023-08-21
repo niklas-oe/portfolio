@@ -7,6 +7,6 @@ export default [
     {
         name: "room_final",
         type: "glbModel",
-        path: "/portfolio/models/room_including_quest2.glb",
+        path: "/portfolio/models/room.glb",
     }
 ]

@@ -3,6 +3,7 @@ import * as THREE from "three";
 import Experience from "../Experience";
 
 import GSAP from "gsap";
+import { MathUtils } from "three/src/math/MathUtils";
 
 export default class Room {
     constructor() {
@@ -28,6 +29,10 @@ export default class Room {
     }
 
     setModel() {
+        var clockPointerHours;
+        var clockPointerMinutes;
+        var clockPointerSeconds;
+
         this.actualRoom.children.forEach(child => {
             child.castShadow = true;
             child.receiveShadow = true;
@@ -47,12 +52,23 @@ export default class Room {
                 child.material.transmission = 1;
                 child.material.opacity = 1;
             }
+            if (child.name == "Clock_Pointer_Hour") {
+                clockPointerHours = child;
+            }
+            if (child.name == "Clock_Pointer_Minute") {
+                clockPointerMinutes = child;
+            }
+            if (child.name == "Clock_Pointer_Second") {
+                clockPointerSeconds = child;
+            }
             if (child.name === "Monitor_Left_Screen") {
                 child.material = new THREE.MeshBasicMaterial({
                     map: this.resources.items.screen_vr,
                 });
             }
-        });
+        })
+
+        this.setClock(clockPointerHours, clockPointerMinutes, clockPointerSeconds);
 
         this.scene.add(this.actualRoom);
         this.actualRoom.scale.set(this.roomScale, this.roomScale, this.roomScale);
@@ -76,6 +92,26 @@ export default class Room {
 
     resize() {
         
+    }
+
+    setClock(clockPointerHours, clockPointerMinutes, clockPointerSeconds) {
+        var clockRotationAxis = new THREE.Vector3(0,-1,0);
+        var date = new Date();
+        const hours = date.getHours();
+        const mins = date.getMinutes();
+        const seconds = date.getSeconds();
+
+        clockPointerHours.rotateOnAxis(clockRotationAxis, MathUtils.degToRad(hours * (360 / 12) + (mins / 60 * 360/12)));
+        clockPointerMinutes.rotateOnAxis(clockRotationAxis, MathUtils.degToRad(mins * (360 / 60)));
+        clockPointerSeconds.rotateOnAxis(clockRotationAxis, MathUtils.degToRad(seconds * (360 / 60)));
+        
+        setInterval(function() {
+            clockPointerSeconds.rotateOnAxis(clockRotationAxis, MathUtils.degToRad(360 / 60));
+        }, 1 * 1000); // 1 * 1000 milsec
+
+        setInterval(function() {
+            clockPointerMinutes.rotateOnAxis(clockRotationAxis, MathUtils.degToRad(360 / 60));
+        }, 60 * 1000); // 1 * 1000 milsec
     }
     
     update() {
