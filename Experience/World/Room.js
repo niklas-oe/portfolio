@@ -111,7 +111,8 @@ export default class Room {
 
         setInterval(function() {
             clockPointerMinutes.rotateOnAxis(clockRotationAxis, MathUtils.degToRad(360 / 60));
-        }, 60 * 1000); // 1 * 1000 milsec
+            clockPointerHours.rotateOnAxis(clockRotationAxis, MathUtils.degToRad(360 / 60 / 60));
+        }, 60 * 1000); // 60 * 1000 milsec
     }
     
     update() {
