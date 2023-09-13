@@ -13,6 +13,8 @@ export default class Room {
         this.time = this.experience.time;
         this.room = this.resources.items.room_final;
         this.actualRoom = this.room.scene;
+        this.tableDecoration = [];
+        this.tableDecorations = new Set(["Monitor_Right", "Monitor_Right_Screen", "Monitor_Left", "Monitor_Left_Screen", "Table_Top", "Table_Mat", "Quest_2", "Quest_2_Controller", "Plant_Dirt", "Plant_Pot", "Leaves", "KeyboardMouse", "Height"])
 
         this.roomScale = 0.34;
 
@@ -66,7 +68,10 @@ export default class Room {
                     map: this.resources.items.screen_vr,
                 });
             }
-        })
+            if (this.tableDecorations.has(child.name)) {
+                this.tableDecoration.push(child);
+            }
+        });
 
         this.setClock(clockPointerHours, clockPointerMinutes, clockPointerSeconds);
 
@@ -121,7 +126,6 @@ export default class Room {
             this.lerp.target,
             this.lerp.ease
         );
-
         this.actualRoom.rotation.y = this.lerp.current;
 
         this.mixer.update(this.time.delta);

@@ -15,10 +15,11 @@ export default class Controls {
         this.time = this.experience.time;
         this.camera = this.experience.camera;
         this.room = this.experience.world.room.actualRoom;
+        this.tableDecoration = this.experience.world.room.tableDecoration;
         
         GSAP.registerPlugin(ScrollTrigger);
 
-        this.setScrollTrigger();
+        this.setScrollTriggers();
     }
 
     setPath() {
@@ -37,7 +38,15 @@ export default class Controls {
         });
     }
 
-    setScrollTrigger() {
+    setScrollTriggers() {
+        this.setScrollTriggersDesktop();
+        this.setScrollTriggersMobile();
+        this.setScrollTriggersAll();
+        this.setScrollTriggerTableDecorationDesktop();
+        this.setScrollTriggerTableDecorationMobile();
+    }
+
+    setScrollTriggersDesktop() {
         ScrollTrigger.matchMedia({
 	        // Desktop
             "(min-width: 969px)": () => {
@@ -80,6 +89,7 @@ export default class Controls {
                         y: 1.1,
                         z: 1.1,
                     }, "same");
+                    
                 // Third Section
                 this.thirdMoveTimeline = new GSAP.timeline({
                     scrollTrigger: {
@@ -106,9 +116,13 @@ export default class Controls {
                         y: 1.1,
                         z: 1.1,
                     }, "same");
-            },
+            }
+        });
+    }
 
-            // Mobile
+    setScrollTriggersMobile() {
+        ScrollTrigger.matchMedia({
+	        // Mobile
             "(max-width: 968px)": () => {
 
                 //Resets
@@ -148,8 +162,12 @@ export default class Controls {
                 .to(this.room.position, {
                     x: 0.4,
                 }, "same");
-            },
-              
+            }
+        }); 
+    }
+
+    setScrollTriggersAll() {
+        ScrollTrigger.matchMedia({
             // all - both versions
             "all": () => {
                 this.sections = document.querySelectorAll(".section");
@@ -198,6 +216,54 @@ export default class Controls {
                 });
             },
         }); 
+    }
+
+    setScrollTriggerTableDecorationDesktop() {
+        this.tableDecoration.forEach(piece => {
+            ScrollTrigger.matchMedia({
+                // Desktop
+                "(min-width: 969px)": () => {
+    
+                    // Second Section
+                    this.secondMoveTimeline = new GSAP.timeline({
+                        scrollTrigger: {
+                            trigger: ".second-move",
+                            start: "top top",
+                            end: "bottom bottom",
+                            scrub: 6,
+                            invalidateOnRefresh: true,
+                        },
+                    })
+                        .to(piece.position, {
+                            y: piece.position.y + 0.6
+                        }, "same");
+                }
+            }); 
+        });
+    }
+
+    setScrollTriggerTableDecorationMobile() {
+        this.tableDecoration.forEach(piece => {
+            ScrollTrigger.matchMedia({
+                // Mobile
+                "(max-width: 968px)": () => {
+    
+                    // Second Section
+                    this.secondMoveTimeline = new GSAP.timeline({
+                        scrollTrigger: {
+                            trigger: ".second-move",
+                            start: "top top",
+                            end: "bottom bottom",
+                            scrub: 6,
+                            invalidateOnRefresh: true,
+                        },
+                    })
+                        .to(piece.position, {
+                            y: piece.position.y + 0.6
+                        }, "same");
+                }
+            }); 
+        });
     }
 
     resize() {
